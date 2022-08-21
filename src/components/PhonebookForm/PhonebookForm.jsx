@@ -1,17 +1,34 @@
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/phonebookActions';
 
 export default function PhonebookForm() {
   const dispatch = useDispatch();
 
+  const contactsForChecking = useSelector(
+    state => state.phonebookReducer.contacts
+  );
+
   const handleSubmit = e => {
     e.preventDefault();
 
+    const target = e.target.elements;
+
+    const isInContacts = contactsForChecking.find(
+      contact => contact.name.toLowerCase() === target.name.value.toLowerCase()
+    );
+
+    if (isInContacts) {
+      alert(`${target.name.value} is already in contacts`);
+      target.name.value = '';
+      target.phone.value = '';
+      return;
+    }
+
     const formDatas = {
       id: nanoid(),
-      name: e.target.elements.name.value,
-      phone: e.target.elements.phone.value,
+      name: target.name.value,
+      phone: target.phone.value,
     };
 
     dispatch(addContact(formDatas));
@@ -22,11 +39,25 @@ export default function PhonebookForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" name="name" />
-
-      <input type="text" name="phone" />
+      <p>Name</p>
+      <input
+        type="text"
+        name="name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
+      />
+      <p>Number</p>
+      <input
+        type="tel"
+        name="phone"
+        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+        required
+      />
 
       <button type="submit">Add contact</button>
+      <hr />
     </form>
   );
 }
