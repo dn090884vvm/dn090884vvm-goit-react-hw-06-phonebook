@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/phonebookActions';
+import { ListElement, Button } from './ContactList.styled';
 
 export default function ContactListItem({ contact }) {
   const { id, name, phone } = contact;
@@ -10,10 +11,10 @@ export default function ContactListItem({ contact }) {
     dispatch(deleteContact(id));
   };
   return (
-    <li>
+    <ListElement>
       <p>{name}</p>
       <p>{phone}</p>
-      <button onClick={() => deletedContact(id)}>Delete</button>
-    </li>
+      <Button onClick={() => deletedContact(id)}>Delete</Button>
+    </ListElement>
   );
 }

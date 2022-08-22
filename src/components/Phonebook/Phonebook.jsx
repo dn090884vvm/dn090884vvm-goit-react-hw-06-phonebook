@@ -1,4 +1,5 @@
 import React from 'react';
+import { Wrapper } from './Phonebook.styled';
 
 import PhonebookForm from 'components/PhonebookForm/PhonebookForm';
 import PhonebookFilter from 'components/PhonebookFilter/PhonebookFilter';
@@ -25,20 +26,16 @@ const Phonebook = () => {
   //   };
 
   return (
-    <div>
-      <PhonebookForm />
-      <PhonebookFilter />
-      <ContactList />
-      {/* <ul>
-        {getFilteredContacts().map(({ id, name, phone }) => (
-          <li key={id}>
-            <p>{name}</p>
-            <p>{phone}</p>
-            <button onClick={() => deleteContact(id)}>Delete</button>
-          </li>
-        ))}
-      </ul> */}
-    </div>
+    <>
+      <Wrapper>
+        <PhonebookForm />
+        <PhonebookFilter />
+      </Wrapper>
+
+      <Wrapper>
+        <ContactList />
+      </Wrapper>
+    </>
   );
 };
 
