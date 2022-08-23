@@ -12,13 +12,23 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const rootReducer = combineReducers({ phonebookReducer });
+// const rootReducer = combineReducers({ phonebookReducer });
 
 const persistConfig = {
   key: 'root',
   storage: storage,
   blacklist: ['phonebookReducer'],
 };
+
+const phonebookReducerConfig = {
+  key: 'phonebookReducer',
+  storage: storage,
+  blacklist: ['filter'],
+};
+
+const rootReducer = combineReducers({
+  phonebookReducer: persistReducer(phonebookReducerConfig, phonebookReducer),
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
