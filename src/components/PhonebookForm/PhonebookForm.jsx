@@ -20,8 +20,8 @@ export default function PhonebookForm() {
 
     if (isInContacts) {
       alert(`${target.name.value} is already in contacts`);
-      target.name.value = '';
-      target.phone.value = '';
+      // target.name.value = '';
+      // target.phone.value = '';
       return;
     }
 
